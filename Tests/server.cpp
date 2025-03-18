@@ -1,4 +1,3 @@
-
 #include <iostream>
 #include <csignal>
 #include <cstdlib>
@@ -8,21 +7,21 @@
 
 using namespace std;
 
-#define PORT 8080
+#define PORT 8080           
 
-int server_fd;
+int server_fd;              
 
 void signalHandler(int signum) {
     cout << "\nSeñal recibida: " << signum << ". Cerrando servidor..." << endl;
-    close(server_fd);
+    close(server_fd); 
     exit(signum);
 }
 
 int main() {
-    struct sockaddr_in address;
-    int addrlen = sizeof(address);
-    int new_socket;
-    char buffer[1024] = {0};
+    struct sockaddr_in address;         
+    int addrlen = sizeof(address);      
+    int new_socket;                     
+    char buffer[1024] = {0};       
 
     signal(SIGINT, signalHandler);
     signal(SIGTERM, signalHandler);
@@ -33,9 +32,9 @@ int main() {
         exit(EXIT_FAILURE);
     }
 
-    address.sin_family = AF_INET;
-    address.sin_addr.s_addr = INADDR_ANY;
-    address.sin_port = htons(PORT);
+    address.sin_family = AF_INET; 
+    address.sin_addr.s_addr = INADDR_ANY; 
+    address.sin_port = htons(PORT); 
 
     if (bind(server_fd, (struct sockaddr*)&address, sizeof(address)) < 0) {
         perror("Error en el bind");
@@ -50,6 +49,7 @@ int main() {
     cout << "Servidor escuchando en el puerto " << PORT << endl;
 
     while (true) {
+        
         new_socket = accept(server_fd, (struct sockaddr*)&address, (socklen_t*)&addrlen);
         if (new_socket < 0) {
             perror("Fallo en el accept");

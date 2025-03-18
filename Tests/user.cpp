@@ -1,51 +1,48 @@
-#include <iostream>
-#include <cstring>
-#include <sys/socket.h>
-#include <arpa/inet.h>
-#include <unistd.h>
 
-#define PORT 8080
+#include "prototipos.h"
 
 int main() {
-    int sock = 0;
-    struct sockaddr_in serv_addr;
-    char buffer[1024] = {0};
-    std::string message;
+    int sock = 0;                       // Descriptor de archivo del socket
+    struct sockaddr_in serv_addr;       // Estructura para almacenar la dirección del servidor
+    char buffer[MSG_MAX_SIZE] = {0};    // Buffer para recibir datos del servidor
+    string message;                // Mensaje que enviará el cliente
 
     // Pedir mensaje al usuario
-    std::cout << "Ingrese el mensaje a enviar: ";
-    std::getline(std::cin, message);
+    cout << "Ingrese el mensaje a enviar: ";
+    getline(cin, message);  // Leer mensaje desde la entrada estándar
 
-    // Crear socket
-    if ((sock = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
-        std::cerr << "Error al crear el socket" << std::endl;
+    // 1. Crear el socket del cliente
+    sock = socket(AF_INET, SOCK_STREAM, 0);
+    if (sock < 0) {
+        cerr << "Error al crear el socket" << endl;
         return -1;
     }
 
-    serv_addr.sin_family = AF_INET;
-    serv_addr.sin_port = htons(PORT);
+    // 2. Configurar la dirección del servidor
+    serv_addr.sin_family = AF_INET;  // Tipo de dirección: IPv4
+    serv_addr.sin_port = htons(PORT);  // Convertir el puerto al formato de red
 
-    // Convertir dirección IP
+    // 3. Convertir la dirección IP de texto a binario
     if (inet_pton(AF_INET, "127.0.0.1", &serv_addr.sin_addr) <= 0) {
-        std::cerr << "Dirección inválida o no soportada" << std::endl;
+        cerr << "Dirección inválida o no soportada" << endl;
         return -1;
     }
 
-    // Conectar al servidor
+    // 4. Conectar al servidor
     if (connect(sock, (struct sockaddr*)&serv_addr, sizeof(serv_addr)) < 0) {
-        std::cerr << "Conexión fallida" << std::endl;
+        cerr << "Conexión fallida" << endl;
         return -1;
     }
 
-    // Enviar mensaje
+    // 5. Enviar el mensaje al servidor
     send(sock, message.c_str(), message.length(), 0);
-    std::cout << "Mensaje enviado: " << message << std::endl;
+    cout << "Mensaje enviado: " << message << endl;
 
-    // Recibir respuesta
-    read(sock, buffer, 1024);
-    std::cout << "Respuesta del servidor: " << buffer << std::endl;
+    // 6. Recibir la respuesta del servidor
+    read(sock, buffer, MSG_MAX_SIZE);
+    cout << "Respuesta del servidor: " << buffer << endl;
 
-    // Cerrar socket
+    // 7. Cerrar el socket
     close(sock);
     return 0;
 }
