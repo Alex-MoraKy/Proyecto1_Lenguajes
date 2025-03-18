@@ -93,8 +93,8 @@ int main() {
         cout << "Mensaje recibido: " << buffer << endl;
         cout << "Cliente: " << client_ip << endl;
 
-        /* Responde al cliente con un mensaje de confirmación.
-        send(new_socket, "Mensaje recibido", strlen("Mensaje recibido"), 0); */
+        // Responde al cliente con un mensaje de confirmación.
+        send(new_socket, "[server]SUCCESS", strlen("[server]SUCCESS"), 0);
         
         // Cierra la conexión con el cliente.
         close(new_socket);

@@ -11,6 +11,9 @@
 #include <iostream>  	// Prints
 #include <cstring>		// Manejo de strings.
 
+#include <fstream>		// Manejo de archivos
+#include <sstream>		// Manipulación de cadenas de texto
+
 #include <csignal>   	// Manejo de señales (SIGINT y SIGTERM)
 #include <cstdlib>		// Funciones generales, gestión de memoria, conversiones y control del programa.
 
