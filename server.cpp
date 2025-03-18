@@ -24,10 +24,10 @@ void signalHandler(int signal_id) {
 int main() {
 
 	// --------------------------------------- //
-	struct sockaddr_in server_address;  	// Struct "sockaddr_in " que guarda la dirección del servidor.
-    int addrlen = sizeof(server_address);   // Longitud de la dirección del servidor.
-    int new_socket;                     	// Descriptor del socket para la conexión entrante.
-    char buffer[MSG_MAX_SIZE];            			// Buffer temporal para almacenar mensajes recibidos.
+	struct sockaddr_in server_address, client_address;  	// Struct "sockaddr_in " que guarda la dirección del servidor.
+    socklen_t addrlen = sizeof(server_address);   				// Longitud de la dirección del servidor.
+    int new_socket;                     					// Descriptor del socket para la conexión entrante.
+    char buffer[MSG_MAX_SIZE];            					// Buffer temporal para almacenar mensajes recibidos.
     
     // --------------------------------------- //
     // Configurar la función "signalHandler" en caso de cierre.
@@ -71,17 +71,27 @@ int main() {
 	// Apertura de servidor hasta que se cierre por alguna señal.
 	while (true) {
 
+		// Limpiar buffer
+		memset(buffer, 0, sizeof(buffer));
+
         // Espera una conexión entrante y la almacena en la variable "new_socket".
-        new_socket = accept(server_file_descriptor, (struct sockaddr*)&server_address, (socklen_t*)&addrlen);
+        new_socket = accept(server_file_descriptor, (struct sockaddr*)&client_address, &addrlen);
 
         if (new_socket < 0) {  // Error en la recepción del socket
             perror("Fallo en el accept");
             continue;
         }
 
+        // --------------------------------------- //
+        // Obtener la dirección IP del cliente
+        char client_ip[INET_ADDRSTRLEN];  				// INET_ADDRSTRLEN es el tamaño máximo para una dirección IPv4.
+        inet_ntop(AF_INET, &client_address.sin_addr, client_ip, INET_ADDRSTRLEN);
+
+        // --------------------------------------- //
         // Lee los datos enviados por el cliente.
         read(new_socket, buffer, MSG_MAX_SIZE);
         cout << "Mensaje recibido: " << buffer << endl;
+        cout << "Cliente: " << client_ip << endl;
 
         /* Responde al cliente con un mensaje de confirmación.
         send(new_socket, "Mensaje recibido", strlen("Mensaje recibido"), 0); */

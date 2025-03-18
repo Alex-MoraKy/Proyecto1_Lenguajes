@@ -5,7 +5,7 @@ int main() {
     int sock = 0;                       // Descriptor de archivo del socket
     struct sockaddr_in serv_addr;       // Estructura para almacenar la dirección del servidor
     char buffer[MSG_MAX_SIZE] = {0};    // Buffer para recibir datos del servidor
-    string message;                // Mensaje que enviará el cliente
+    string message;                     // Mensaje que enviará el cliente
 
     // Pedir mensaje al usuario
     cout << "Ingrese el mensaje a enviar: ";
