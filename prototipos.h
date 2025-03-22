@@ -22,7 +22,12 @@
 #include <sys/socket.h> // Funciones de sockets para linux.
 #include <arpa/inet.h>  // Manipulación de direcciones IP.
 
+#include <gtkmm.h>      //Interfaz en c++
+#include <glibmm.h>     // BIblioteca de str compatible con gtk 
+
 using namespace std; 	// Evitar std::
+using namespace Glib;   // Evitar Glib::
+using namespace Gtk;    // Evitar Gtk::
 
 // --------------------------------------- //
 //                Constantes               //
