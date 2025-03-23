@@ -21,6 +21,7 @@
 #include <netinet/in.h> // Structs y constantes para sockets, especialmente para IPv4.
 #include <sys/socket.h> // Funciones de sockets para linux.
 #include <arpa/inet.h>  // Manipulación de direcciones IP.
+#include <sys/wait.h>  // Para waitpid()
 
 using namespace std; 	// Evitar std::
 
@@ -38,5 +39,21 @@ using namespace std; 	// Evitar std::
 //                Variables                //
 // --------------------------------------- //
 
-int ACTUAL_PORT = 8080;     // Puerto actual del servidor.
+int ACTUAL_PORT = 8089;     // Puerto actual del servidor.
 int MSG_MAX_SIZE = 1024;	// Tamaño del buffer de mensajes.
+int MAX_CLIENTS = 6;	// Tamaño del buffer de mensajes.
+
+
+//esta estructura se usa para enviar mensajes 
+struct Message {
+    char sender[32];
+    char receiver[32] = {0};
+    char data[1024];
+};
+
+
+//estructura que se usa para identificar los sockets en el server
+struct Connection{
+    int socket = 0;
+    char owner[32] = {0};
+};
