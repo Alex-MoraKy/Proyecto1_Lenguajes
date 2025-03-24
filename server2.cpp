@@ -1,6 +1,5 @@
 #include "prototipos.h"
-
-
+#include "variables.h"
 
 
 

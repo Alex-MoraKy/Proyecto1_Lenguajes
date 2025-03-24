@@ -1,5 +1,6 @@
 
 #include "prototipos.h"
+#include "variables.h"
 
 /*
 Es lo mismo que usario.cpp solo que ahora recibe y envia mensajes ya que cree dos procesos con el fork
@@ -7,11 +8,6 @@ Es lo mismo que usario.cpp solo que ahora recibe y envia mensajes ya que cree do
 
 // --------------------------------------- //
 // Variables
-
-int ACTUAL_PORT = 8089;     // Puerto actual del servidor.
-int MSG_MAX_SIZE = 1024;	// Tamaño del buffer de mensajes.
-int MAX_CLIENTS = 6;	// Tamaño del buffer de mensajes.
-
 
 // --------------------------------------- //
 // Funciones
