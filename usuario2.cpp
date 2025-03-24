@@ -8,6 +8,11 @@ Es lo mismo que usario.cpp solo que ahora recibe y envia mensajes ya que cree do
 // --------------------------------------- //
 // Variables
 
+int ACTUAL_PORT = 8089;     // Puerto actual del servidor.
+int MSG_MAX_SIZE = 1024;	// Tamaño del buffer de mensajes.
+int MAX_CLIENTS = 6;	// Tamaño del buffer de mensajes.
+
+
 // --------------------------------------- //
 // Funciones
 
@@ -227,9 +232,10 @@ void SendMessages(int* userSocket, string sender, string receiver)
     close(*userSocket);
 }
 
+
 // --------------------------------------- //
 // Usuario
-int main() {
+int main(int argc, char *argv[]) {
 
 	// Iniciar sesión o login
 	string comando_consola;
@@ -361,7 +367,7 @@ int main() {
         }
 	}
 
-
+    
 
     return 0;
 }

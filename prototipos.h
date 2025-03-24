@@ -30,6 +30,7 @@ using namespace std; 	// Evitar std::
 using namespace Glib;   // Evitar Glib::
 using namespace Gtk;    // Evitar Gtk::
 
+
 // --------------------------------------- //
 //                Constantes               //
 // --------------------------------------- //
@@ -38,15 +39,29 @@ using namespace Gtk;    // Evitar Gtk::
 // --------------------------------------- //
 //                Funciones                //
 // --------------------------------------- //
+Box* v_inicio();
+Box* v_registro();
+Box* v_contactos();
+Box* v_chat(string contacto);
+void cambiar_contenido(Box* nuevo_contenido);
 
 
 // --------------------------------------- //
 //                Variables                //
 // --------------------------------------- //
 
-int ACTUAL_PORT = 8089;     // Puerto actual del servidor.
-int MSG_MAX_SIZE = 1024;	// Tamaño del buffer de mensajes.
-int MAX_CLIENTS = 6;	// Tamaño del buffer de mensajes.
+extern int ACTUAL_PORT;
+extern int MSG_MAX_SIZE;
+extern int MAX_CLIENTS;
+
+extern ApplicationWindow* ventana_principal;
+extern Box* contenedor_principal;
+// int ACTUAL_PORT = 8089;     // Puerto actual del servidor.
+// int MSG_MAX_SIZE = 1024;	// Tamaño del buffer de mensajes.
+// int MAX_CLIENTS = 6;	// Tamaño del buffer de mensajes.
+
+// ApplicationWindow* ventana_principal = nullptr;
+// Box* contenedor_principal = nullptr;
 
 
 //esta estructura se usa para enviar mensajes 

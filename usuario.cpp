@@ -44,7 +44,7 @@ bool credenciales_correctas(string username, string password) {
 // Crear nuevo usuario
 void crear_nuevo_usuario(string username, string password) {
     ifstream lectura_database("db.txt");
-    
+    cout << username << password << endl;
     // Si el archivo no existe, se creará en la siguiente parte
     if (!lectura_database) {
         cerr << "Nota: El archivo de credenciales no existe, se creará uno nuevo." << endl;
