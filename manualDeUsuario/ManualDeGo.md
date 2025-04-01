@@ -319,7 +319,7 @@ incrementar()
 
 **Por metodo**:
 
-Este tipo es muy común usarlo con structs. Lo que hace es asociar un tipo con una función usando el operado ".":
+Este tipo es muy común usarlo con structs. Lo que hace es asociar un tipo (structs en su mayoría) con una función usando el operado ".":
 
 ``` go
 type Rectangulo struct {
@@ -339,3 +339,79 @@ func main(){
 
 }
 ```
+
+#### Tipos de Datos
+
+En go existen los siguientes tipos de datos:
+
+- **Boolean:** consisten en los valores binarios (bool) true y false.
+- **Numeric:** son tipos númericos, se subdivide en enteros y flotantes.
+- **String:** Es una cadena de bits que representa un set de valores de tipo string. Son inmutables.
+- **Derived:** Incluyen punteros, arreglos, estructuras, uniones, funciones, slices, interfaces, maps, y canales.
+
+### 3. Tipos de datos básicos
+
+#### Enteros
+
+Los enteros son una subdivición de los tipos de datos numéricos. Golang ofrece divisiones por si el entero tiene signo o no, o bien para diferentes tamaños:
+
+| Numero | Tipos   | Descripción                                      |
+|--------|---------|--------------------------------------------------|
+| 1      | uint8   | Unsigned 8-bit integers (0 to 255)               |
+| 2      | uint16  | Unsigned 16-bit integers (0 to 65535)            |
+| 3      | uint32  | Unsigned 32-bit integers (0 to 4294967295)       |
+| 4      | uint64  | Unsigned 64-bit integers (0 to 18446744073709551615) |
+| 5      | int8    | Signed 8-bit integers (-128 to 127)              |
+| 6      | int16   | Signed 16-bit integers (-32768 to 32767)         |
+| 7      | int32   | Signed 32-bit integers (-2147483648 to 2147483647) |
+| 8      | int64   | Signed 64-bit integers (-9223372036854775808 to 9223372036854775807) |
+
+Dependiendo de la arquitectura en la que se esté se usará por defecto el de 32 o 64 bits.
+
+#### Punto Flotantes
+
+Los enteros son una subdivición de los tipos de datos numéricos. Golang ofrece divisiones por si el entero tiene signo o no, o bien para diferentes tamaños:
+
+| Numero | Tipos   | Descripción                                      |
+|--------|---------|--------------------------------------------------|
+| 1      | float32 | Números punto flotante de IEEE-754 32-bit        |
+| 2      | float64 | Números punto flotante de IEEE-754 64-bit        |
+| 3      | complex64 | Números complejos con float32 real y para imaginaria  |
+| 4      | complex128 | Números complejos con float64 real y para imaginaria |
+
+#### Void
+
+En go no existe la palabra reservada void, en caso no desear un retorno simplemente se omite el tipo de dato.
+
+### 4. Declaraciones e identificadores
+
+#### Uso de palabras clave, como static, extern, typedef
+
+##### Static
+En go no se usa static, y si se desea que una función sea accesible desde otros paquetes se usan los nombres de la función en mayúscula en su primera letra.
+
+
+##### extern 
+
+Para importar funciones o paquetes externos se usa la palabra import.
+
+##### Typedef
+
+En go si se le quiere dar un alias a un tipo de dato se puede usar *type*, esto permite hacer la misma función que el typedef en C.
+
+
+#### Identificadores
+
+Se usan para darle nombres únicos a funciones, variables, constantes o tipos. En GO los identificadores pueden saber si contenido es mayúscula o minúscula, por ello VAR != var. Además, estas son las reglas básicas:
+- Solo pueden contener letras, digitos, o barras bajas.
+- Deben iniciar en letras o barras bajas.
+- No pueden contener espacios o carácteres especiales.
+- No pueden ser iguales a las palabras reservadas de Go.
+
+#### Variables Globales y Locales
+
+Ya previamente se comentó sobre ellas y sus usos con *:=* o *=*. Ahora bien, con respecto a sus diferencias, como en muchos lenguajes como C, si hay diferencia las principales son:
+- Las globales se declaran fuera de todas las funciones, mientras las locales son específicas a un scope.
+- Las globales se declaran en el heap, y las locales en el stack.
+- Las locales solo existen durante la ejecución del scope, y las globales durante todo el programa
+- Los scopes superiores son agnósticos a las declaraciones locales de sus scopes "hijos".
