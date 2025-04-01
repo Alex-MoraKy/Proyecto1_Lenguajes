@@ -285,16 +285,57 @@ func main() {
 
 - Retornada en una función:
 ``` go
-// Returning a Function as a Value
-func calculation(factor int) func(int) int {
-    return func(value int) int {
-        return factor * value
+func calcular(factor int) func(int) int {
+    return func(valor int) int {
+        return factor * valor
     }
 }
 
 func main() {
-    multiplyByTwo := calculation(2)
-    result := multiplyByTwo(20)
-    fmt.Println("Result:", result)
+    multiplicarPor2 := calcular(2)
+    resultado := multiplicarPor2(20)
+    fmt.Println("Resultado:", resultado)
+}
+```
+
+**Por Closure**:
+
+Este tipo de función es muy única. Ocurre cuando una función puede acceder a los valores de una función que la envuelve. A continuación un ejemplo de un contador que al llamar la variable que almacena la función incrementa a count:
+
+``` go
+contador := func() func() int {
+	count := 0
+	return func() int {
+		count++
+		return count
+	}
+}
+incrementar := counter()
+
+//incrementa la variable count en 2
+incrementar()
+incrementar()
+``` 
+
+**Por metodo**:
+
+Este tipo es muy común usarlo con structs. Lo que hace es asociar un tipo con una función usando el operado ".":
+
+``` go
+type Rectangulo struct {
+    Ancho, Alto float64
+}
+
+func (r Rectangulo) Area() float64 {
+    return r.Ancho * r.Alto
+}
+
+
+func main(){
+
+    rect := Rectangulo{2, 3}
+    // se puede llamar a la función usando el .
+    fmt.Println(rect.area())
+
 }
 ```
