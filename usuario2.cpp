@@ -156,6 +156,12 @@ int EstablecerConexion(int* userSocket, struct sockaddr_in* serverAddress)
     return 0; 
 }
 
+void mostrarEncabezadoChat(string destinatario) {
+    cout << "\n===============================\n";
+    cout << "==   CHATEANDO CON: " << destinatario << "\n";
+    cout << "===============================\n" << endl;
+}
+
 void ReceiveMessages(int* userSocket)
 {
     while(1){
@@ -169,10 +175,14 @@ void ReceiveMessages(int* userSocket)
         perror("Error al leer del socket");
         break;
     }
-    cout << endl; 
-    cout << buffer<< endl; 
+    // Limpiar la línea donde se esté escribiendo
+    cout << "\033[2K\r"; // borra la línea actual
 
-    
+    // Imprimir el mensaje recibido en azul
+    cout << "\033[1;34m" << buffer << "\033[0m" << endl;
+
+    // Volver a imprimir el prompt, bien alineado
+    cout << "Ingrese el mensaje a enviar:" << flush;
 
 
     }
@@ -194,7 +204,7 @@ void SendMessages(int* userSocket, string sender, string receiver)
 
     while (true)
     {   
-        cout << "Ingrese el mensaje a enviar: ";
+        cout << "Ingrese el mensaje a enviar: " << flush;
         // Stringstream para almacenar todo el mensaje (getline da problemas)
         string word;
         stringstream message_stream;  
@@ -207,7 +217,6 @@ void SendMessages(int* userSocket, string sender, string receiver)
                 break;
             }
         }
-
         // Asignar el stringstream al mensaje
         string message = message_stream.str();
         
@@ -218,9 +227,12 @@ void SendMessages(int* userSocket, string sender, string receiver)
         ssize_t bytesSent = send(*userSocket, &msg, sizeof(msg), 0);
 
         if (bytesSent < 0) {
-            cout << "Error al enviar el mensaje" << endl;
+            printError("Error al enviar el mensaje");
             exit(-1); 
         }
+        cout << "\033[1A\033[2K\r";
+        cout << "\033[2K\r"; // Limpiar línea
+        cout << "\033[1;32m" << sender << ": " << message << "\033[0m" << endl;
 
     }
 
@@ -229,54 +241,34 @@ void SendMessages(int* userSocket, string sender, string receiver)
 }
 
 
-// --------------------------------------- //
-// Usuario
-int main(int argc, char *argv[]) {
+void mostrarMenu() {
+    cout << "\n=============================\n";
+    cout << "==         M E N U         ==\n";
+    cout << "=============================\n";
+    cout << "1. Iniciar sesion\n";
+    cout << "2. Registrarse\n";
+    cout << "3. Salir\n";
+    cout << "Opción: ";
+}
 
-	// Iniciar sesión o login
-	string comando_consola;
-	string username, password;
-    
-	cout << ">>> ";
-	cin >> comando_consola;
-    
-	if (comando_consola == "login") {
-        cout << "Usuario: ";
-        cin >> username;
-        cout << "Contraseña: ";
-        cin >> password;
+void printError(string mensaje) {
+    cout << "\033[1;31m" << mensaje << "\033[0m\n";
+}
 
-        if (!credenciales_correctas(username, password)) {
-            cout << "Error: Credenciales incorrectas." << endl;
-            return 1; // Indicar error en la ejecución
-        }
-
-        cout << "Inicio de sesión exitoso." << endl;
-
-    } else if (comando_consola == "register") {
-        cout << "Nuevo Usuario: ";
-        cin >> username;
-        cout << "Contraseña: ";
-        cin >> password;
-
-        crear_nuevo_usuario(username, password);
-        cout << "Usuario registrado con éxito." << endl;
-
-    } else {
-        cout << "Error: Comando desconocido." << endl;
-        return 1;
-    }
-
+int IniciarMensajeria(string username) {
     //definir a quien enviar mensajes 
+    
     cout <<endl; 
     string receiver;
-	cout << "Usuario a enviar mensajes: ";
-	cin >> receiver;
+    cout << "Usuario a enviar mensajes: ";
+    cin >> receiver;
 
     if(!VerificarExistencia(receiver)){
         cout << "Error: El usuario no existe en sus contactos." << endl;
         return 1; // Indicar error en la ejecución
     }
+
+    mostrarEncabezadoChat(receiver);
 
     //definimos un sockaddr_in para guardar la direccion del server 
     struct sockaddr_in serverAddress;    
@@ -286,14 +278,13 @@ int main(int argc, char *argv[]) {
     pid_t segundoHijo;
     pid_t primerHijo = fork();  
 
-    
+
     //revisammos que no haya error en la creacion
     if (primerHijo < 0) {
-        std::cerr << "Error en fork" << std::endl;
+        printError("Error en fork");
         return 1;
     }
 
-  
     //si arroja 0 es que es el primer hijo, aquí ejecutaremos el "sender"
     if (primerHijo == 0) {
 
@@ -314,7 +305,7 @@ int main(int argc, char *argv[]) {
         send(sendSocket, sender.c_str(), sizeof(sender.c_str()), 0);
 
         if(resultCode){
-            cerr <<"no se puedo dar la conexión"<<endl;
+            printError("Error: no se puedo dar la conexión");
             return 1; 
         }
 
@@ -328,7 +319,7 @@ int main(int argc, char *argv[]) {
             
         //revisammos que no haya error en la creacion
         if(segundoHijo < 0){
-            std::cerr << "Error en fork" << std::endl;
+            printError("Error en fork");
             return 1;
         }
             
@@ -346,7 +337,7 @@ int main(int argc, char *argv[]) {
             send(receiveSocket, username.c_str(), sizeof(username.c_str()), 0);
 
             if(resultCode){
-                cerr <<"no se puedo dar la conexión"<<endl;
+                printError("Error: no se puedo dar la conexión");
                 return 1; 
             }
 
@@ -361,9 +352,191 @@ int main(int argc, char *argv[]) {
             cout <<"culminaron " <<primerHijo << " "<< segundoHijo << endl;
             cout << "se cerro el socket" << endl;
         }
-	}
-
-    
+    }
 
     return 0;
 }
+
+
+// --------------------------------------- //
+// Usuario
+int main(int argc, char *argv[]) {
+    int retornar = 0;
+    int opcion;
+    string username, password;
+    bool salir = false;
+
+    while (!salir) {
+        mostrarMenu();
+        cin >> opcion;
+
+        switch (opcion) {
+            case 1:
+                cout << "Usuario: ";
+                cin >> username;
+                cout << "Contraseña: ";
+                cin >> password;
+
+                if (!credenciales_correctas(username, password)) {
+                    printError("Error: Credenciales incorrectas.");
+                    break;
+                }
+                retornar = IniciarMensajeria(username);
+
+                break;
+            case 2:
+                cout << "Nuevo Usuario: ";
+                cin >> username;
+                cout << "Contraseña: ";
+                cin >> password;
+        
+                crear_nuevo_usuario(username, password);
+                cout << "Usuario registrado con éxito." << endl;
+                break;
+            case 3:
+                salir = true;
+                cout << "Saliendo...\n";
+                break;
+            default:
+                printError("Opción no válida :(. Intente de nuevo.");
+                break;
+        }
+
+    }
+
+
+	// // Iniciar sesión o login
+	// string comando_consola;
+	// string username, password;
+    
+	// cout << ">>> ";
+	// cin >> comando_consola;
+    
+	// if (comando_consola == "login") {
+    //     cout << "Usuario: ";
+    //     cin >> username;
+    //     cout << "Contraseña: ";
+    //     cin >> password;
+
+    //     if (!credenciales_correctas(username, password)) {
+    //         cout << "Error: Credenciales incorrectas." << endl;
+    //         return 1; // Indicar error en la ejecución
+    //     }
+
+    //     cout << "Inicio de sesión exitoso." << endl;
+
+    // } else if (comando_consola == "register") {
+    //     cout << "Nuevo Usuario: ";
+    //     cin >> username;
+    //     cout << "Contraseña: ";
+    //     cin >> password;
+
+    //     crear_nuevo_usuario(username, password);
+    //     cout << "Usuario registrado con éxito." << endl;
+
+    // } else {
+    //     cout << "Error: Comando desconocido." << endl;
+    //     return 1;
+    // }
+
+    // //definir a quien enviar mensajes 
+    // cout <<endl; 
+    // string receiver;
+	// cout << "Usuario a enviar mensajes: ";
+	// cin >> receiver;
+
+    // if(!VerificarExistencia(receiver)){
+    //     cout << "Error: El usuario no existe en sus contactos." << endl;
+    //     return 1; // Indicar error en la ejecución
+    // }
+
+    // //definimos un sockaddr_in para guardar la direccion del server 
+    // struct sockaddr_in serverAddress;    
+
+    // //Ahora iniciaremos dos procesos, uno que reciba mensajes, y el otro que los envie 
+    // //creamos el primer proceso hijo
+    // pid_t segundoHijo;
+    // pid_t primerHijo = fork();  
+
+    
+    // //revisammos que no haya error en la creacion
+    // if (primerHijo < 0) {
+    //     std::cerr << "Error en fork" << std::endl;
+    //     return 1;
+    // }
+
+  
+    // //si arroja 0 es que es el primer hijo, aquí ejecutaremos el "sender"
+    // if (primerHijo == 0) {
+
+    //     int sendSocket = 0;                
+
+    //     //string para enviar al servidor de que este socket solo envia y no recibe
+    //     string sender = "sender";
+
+    //     //Ahora establecmos conexion por medio de esta funcion 
+    //     int resultCode = EstablecerConexion(&sendSocket, &serverAddress);
+
+    //     //aquí se manda un mensaje para que el server vea quien es el 
+    //     //que esta enviando, en este caso como es el sender es trivial saber quien es
+    //     //por lo que solo se manda "sender"
+
+    //     //lo importante va en los metadatos del Message
+
+    //     send(sendSocket, sender.c_str(), sizeof(sender.c_str()), 0);
+
+    //     if(resultCode){
+    //         cerr <<"no se puedo dar la conexión"<<endl;
+    //         return 1; 
+    //     }
+
+    //     //esta funcion se encarga de enviar mensajes, recibe el socket creado, y 
+    //     //el user que envia y al que le envian
+    //     SendMessages(&sendSocket, username, receiver); 
+
+    // } else {
+    //     //hacemos que el padre cree otro hijo 
+    //     segundoHijo = fork(); 
+            
+    //     //revisammos que no haya error en la creacion
+    //     if(segundoHijo < 0){
+    //         std::cerr << "Error en fork" << std::endl;
+    //         return 1;
+    //     }
+            
+    //     //si arroja 0 es que es el segundo hijo, aquí ejecutaremos el "receiver"
+    //     if (segundoHijo == 0) {
+
+        
+    //         int receiveSocket = 0;       
+
+    //         //Ahora establecmos conexion por medio de esta funcion 
+    //         int resultCode = EstablecerConexion(&receiveSocket, &serverAddress);
+
+    //         //aquí se manda un mensaje para que el server vea quien es el 
+    //         //socket donde se está recibiendo mensajes.
+    //         send(receiveSocket, username.c_str(), sizeof(username.c_str()), 0);
+
+    //         if(resultCode){
+    //             cerr <<"no se puedo dar la conexión"<<endl;
+    //             return 1; 
+    //         }
+
+    //         //esta funcion se encarga de enviar mensajes, recibe el socket creado, y 
+    //         //el user que envia y al que le envian
+    //         ReceiveMessages(&receiveSocket); 
+                
+    //     } else{
+    //         //con esto no cierra el socket hasta que los hijos culminen
+    //         waitpid(segundoHijo, NULL, 0);
+    //         waitpid(primerHijo, NULL, 0);
+    //         cout <<"culminaron " <<primerHijo << " "<< segundoHijo << endl;
+    //         cout << "se cerro el socket" << endl;
+    //     }
+	// }
+
+    
+
+    return retornar;
+}
+

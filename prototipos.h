@@ -23,12 +23,12 @@
 #include <arpa/inet.h>  // Manipulación de direcciones IP.
 #include <sys/wait.h>  // Para waitpid()
 
-#include <gtkmm.h>      //Interfaz en c++
-#include <glibmm.h>     // BIblioteca de str compatible con gtk 
+// #include <gtkmm.h>      //Interfaz en c++
+// #include <glibmm.h>     // BIblioteca de str compatible con gtk 
 
 using namespace std; 	// Evitar std::
-using namespace Glib;   // Evitar Glib::
-using namespace Gtk;    // Evitar Gtk::
+// using namespace Glib;   // Evitar Glib::
+// using namespace Gtk;    // Evitar Gtk::
 
 
 // --------------------------------------- //
@@ -39,19 +39,19 @@ using namespace Gtk;    // Evitar Gtk::
 // --------------------------------------- //
 //                Funciones                //
 // --------------------------------------- //
-Box* v_inicio();
-Box* v_registro();
-Box* v_contactos();
-Box* v_chat(string contacto);
-void cambiar_contenido(Box* nuevo_contenido);
-
+// Box* v_inicio();
+// Box* v_registro();
+// Box* v_contactos();
+// Box* v_chat(string contacto);
+// void cambiar_contenido(Box* nuevo_contenido);
+void printError(string mensaje);
 
 // --------------------------------------- //
 //                Variables                //
 // --------------------------------------- //
 
-extern ApplicationWindow* ventana_principal;
-extern Box* contenedor_principal;
+// extern ApplicationWindow* ventana_principal;
+// extern Box* contenedor_principal;
 
 
 //esta estructura se usa para enviar mensajes 
