@@ -6,17 +6,17 @@ Este manual está diseñado para introducirlo a los conceptos fundamentales de G
 
 ### 1. Uso de comandos para controlar el flujo del programa.
 
-En el lenguaje de programación Golang se usan estrucuras ya definidas para controlar el flujo del programa. Lo más probable es que ya esté familiarizado con ellas, ya que son las típicas que suelen haber en todo lenguaje de programación imperativo.
+En el lenguaje de programación Golang se usan estructuras ya definidas para controlar el flujo del programa. Lo más probable es que ya esté familiarizado con ellas, ya que son las típicas que suelen haber en todo lenguaje de programación imperativo.
 
-Entre ellas se encuentran estructuras que controlan el programa por medio de condicionales, por iteración y por "saltos". Más adelante se profundizará sobre como definirlas, en la sección de estructuras de control de flujo.
+Entre ellas se encuentran estructuras que controlan el programa por medio de condicionales, iteración y "saltos". Más adelante se profundizará sobre como definirlas, en la sección de estructuras de control de flujo.
 
 ### 2. Empleo de asignaciones a variables para manipular el estado del sistema. 
 
-En Golang se emplea el uso de variables de manera similar a muchos de los lenguajes del parádigma imperativo. En ellas se puede guardar  el estaod actual del programa, en contandores, flags, etc.  
+En Golang se emplea el uso de variables de manera similar a muchos de los lenguajes del parádigma imperativo. En ellas se puede guardar  el estado actual del programa, en contadores, flags, etc.  
 
 Además, las variables en Go no solo guardan valores literales, también son capaces de almacenar funciones, lo cual hace que el lenguajes sea sumamente flexible y permita nativamente usar patrones como dependency injection.
 
-En cuanto a detalles más específicos sobre como declarar y asignar variables refierase a la sección de más adelante en aspecto del léxico y sintaxis. 
+En cuanto a detalles más específicos sobre como declarar y asignar variables refiérase a la sección de más adelante sobre aspecto del léxico y sintaxis. 
 
 ### 3. Forma de definir una ejecución secuencial de instrucciones 
 
@@ -38,7 +38,7 @@ Ahora bien, dentro del main está el código que será ejecutado línea por lín
 ### 1. Sintaxis de forma libre 
 
 #### Tokens
-En go existen los tokens, que hacen referencia a palabras que tienen un significado para el compilador. Pueden ser ya sea palabras reservadas, identificadores, una constante, una literal o un simbolo.
+En go existen los tokens, hacen referencia a palabras que tienen un significado para el compilador. Pueden ser palabras reservadas, identificadores, una constante, una literal o un símbolo.
 
 ``` go
 fmt.Println("Hola mundo!")
@@ -64,12 +64,11 @@ Se pueden usar estos dos tipos
 
 En go tanto los comentarios o líneas sin contenido son tomados como espacios en blanco. También le da información al compilador sobre donde está ubicados los elementos en una declaración.
 
-
 ### 2. Definiciones
 
 #### Funciones
 
-Todos los programas en go mínimo tienen la función main, pero se recomienda dividir el código en distintas funciones. Cuando se declara una función se le informa al compilador el tipo de dato que retorno, el identificador y sus parámetros.
+Todos los programas en go mínimo tienen la función main, pero se recomienda dividir el código en distintas. Cuando se declara una función se le informa al compilador el tipo de dato que retorna, el identificador y sus parámetros.
 
 Usualmente esta es la estructura básica:
 
@@ -82,24 +81,24 @@ func nombre( [lista de parametros] ) [tipos de retorno]
 
 Para más información sobre funciones refiersae a su sección
 #### Variables
-Las variables en go se pueden inicializar en dos lugares dentro de funciones (locales) o bien fuera de funciones (package-level/global).
+Las variables en go se pueden inicializar en dos lugares dentro de funciones (locales) o bien fuera de ellas (package-level/global).
 
 Existen dos tipos de declaración la standard y la short
 
 ##### Standard
 
-Las variables en go se inicializan con la palabra *var* seguido de un identificador (solo un tipo de dato por línea), además usan *=* como signo :
+Las variables en go se inicializan con la palabra *var* seguido de un identificador (solo un tipo de dato por línea), además usa *=* como signo :
 
 ``` go
-var nombre string = "Santiago"
+var nombre string = "Maria"
 var dia, noche bool = true, false
 var edad int = 20
 ```
 
-También se pueden declarar sin poner el tipo y el compilador va a inferir el tipo de dato (permite muchis tipos por línea):
+También se pueden declarar sin poner el tipo y el compilador va a inferir el tipo de dato (permite muchos tipos por línea):
 
 ``` go
-var nombre, dia = "Santiago", true
+var nombre, dia = "Maria", true
 var edad, noche = 20, false
 ```
 
@@ -113,7 +112,7 @@ Finalmente se pueden declarar muchas variables con solo una palabra clave var:
 
 ``` go
 var ( 
-    nombre, edad = "Santiago", 20
+    nombre, edad = "Maria", 20
     dia, noche bool = true, false
 )
 ```
@@ -121,26 +120,26 @@ var (
 
 También se usa para asignar variables, pero solo dentro de funciones, además se usa el *:=* como signo y no se usa *var*:
 ``` go
-nombre, apellido := "Santiago", "Chaves"
+nombre, apellido := "Maria", "Estrada"
 edad, dia := 20, false
 ```
-cabe recalcar que si se quiere crear una  redeclaración se ocupa usar el *=*, mínimo debe haber una declaración nueva para usar *:=* :
+cabe recalcar que si se quiere crear una redeclaración se ocupa usar el *=*, mínimo debe haber una declaración nueva para usar *:=* :
 
 ``` go
 // se puede
-nombre := "Santiago"
+nombre := "Maria"
 
 // se puede
-edad, nombre := 20, "Alex"
+edad, nombre := 20, "Maria"
 
 // no se puede
-nombre := "Santiago"
+nombre := "Maria"
 
 // se puede
-nombre = "Santiago"
+nombre = "Maria"
 ```
 
-También si se declaran variables que no se usan, en tiempo se dará un error.
+También si se declaran variables que no se usan dentro del scope, en tiempo de compilación se arrojará un error.
 
 #### Tipos de Datos
 
@@ -149,7 +148,7 @@ En go existen los siguientes tipos de datos:
 - **Boolean:** consisten en los valores binarios (bool) true y false.
 - **Numeric:** son tipos númericos, se subdivide en enteros y flotantes.
 - **String:** Es una cadena de bits que representa un set de valores de tipo string. Son inmutables.
-- **Derived:** Incluyen punteros, arreglos, estructuras, uniones, funciones, slices, interfaces, maps, y canales.
+- **Derived:** Incluye a los punteros, arreglos, estructuras, uniones, funciones, slices, interfaces, maps, y canales.
 
 ### 3. Tipos de datos básicos
 
@@ -159,14 +158,14 @@ Los enteros son una subdivición de los tipos de datos numéricos. Golang ofrece
 
 | Numero | Tipos   | Descripción                                      |
 |--------|---------|--------------------------------------------------|
-| 1      | uint8   | Unsigned 8-bit integers (0 to 255)               |
-| 2      | uint16  | Unsigned 16-bit integers (0 to 65535)            |
-| 3      | uint32  | Unsigned 32-bit integers (0 to 4294967295)       |
-| 4      | uint64  | Unsigned 64-bit integers (0 to 18446744073709551615) |
-| 5      | int8    | Signed 8-bit integers (-128 to 127)              |
-| 6      | int16   | Signed 16-bit integers (-32768 to 32767)         |
-| 7      | int32   | Signed 32-bit integers (-2147483648 to 2147483647) |
-| 8      | int64   | Signed 64-bit integers (-9223372036854775808 to 9223372036854775807) |
+| 1      | uint8   | enteros sin signo de 8 bits   (0 to 255)         |
+| 2      | uint16  | enteros sin signo de 16 bits   (0 to 65535)     |
+| 3      | uint32  | enteros sin signo de 32 bits (0 to 4294967295)       |
+| 4      | uint64  | enteros sin signo de 64 bits (0 to 18446744073709551615) |
+| 5      | int8    | enteros con signo de 8 bits (-128 to 127)              |
+| 6      | int16   | enteros con signo de 16 bits (-32768 to 32767)         |
+| 7      | int32   | enteros con signo de 32 bits (-2147483648 to 2147483647) |
+| 8      | int64   | enteros con signo de 64 bits (-9223372036854775808 to 9223372036854775807) |
 
 Dependiendo de la arquitectura en la que se esté se usará por defecto el de 32 o 64 bits.
 
@@ -192,19 +191,17 @@ En go no existe la palabra reservada void, en caso no desear un retorno simpleme
 ##### Static
 En go no se usa static, y si se desea que una función sea accesible desde otros paquetes se usan los nombres de la función en mayúscula en su primera letra.
 
-
 ##### extern 
 
-Para importar funciones o paquetes externos se usa la palabra import.
+Para importar funciones o paquetes externos se usa la palabra *import*.
 
 ##### Typedef
 
-En go si se le quiere dar un alias a un tipo de dato se puede usar *type*, esto permite hacer la misma función que el typedef en C.
-
+En go si se le quiere dar un alias a un tipo de dato se puede usar *type*, esto permite hacer lo mismo que el typedef en C.
 
 #### Identificadores
 
-Se usan para darle nombres únicos a funciones, variables, constantes o tipos. En GO los identificadores pueden saber si contenido es mayúscula o minúscula, por ello VAR != var. Además, estas son las reglas básicas:
+Se usan para darle nombres únicos a funciones, variables, constantes o tipos. En Go los identificadores son case sensitive, por ello VAR != var. Además, estas son las reglas básicas:
 - Solo pueden contener letras, digitos, o barras bajas.
 - Deben iniciar en letras o barras bajas.
 - No pueden contener espacios o carácteres especiales.
@@ -212,7 +209,7 @@ Se usan para darle nombres únicos a funciones, variables, constantes o tipos. E
 
 #### Variables Globales y Locales
 
-Ya previamente se comentó sobre ellas y sus usos con *:=* o *=*. Ahora bien, con respecto a sus diferencias, como en muchos lenguajes como C, si hay diferencia las principales son:
+Ya previamente se comentó sobre ellas y sus usos con *:=* o *=*. Ahora bien, con respecto a sus diferencias, como en muchos lenguajes como C, si hay diferencias, las principales son:
 - Las globales se declaran fuera de todas las funciones, mientras las locales son específicas a un scope.
 - Las globales se declaran en el heap, y las locales en el stack.
 - Las locales solo existen durante la ejecución del scope, y las globales durante todo el programa
@@ -227,7 +224,7 @@ Ya previamente se comentó sobre ellas y sus usos con *:=* o *=*. Ahora bien, co
 
 #### if-else 
 
-Es la típica condicional de dos vías. Tiene una variante, y es que puede generar un valor si se entra en alguna de las dos vías, de manera similar a como ocurre en los fors cuando se define la variable de control. A continuación ambas variantes
+Es la típica condicional de dos vías. Tiene una variante que puede generar un valor si se entra en alguna de las dos vías, de manera similar a como ocurre en los fors cuando se define la variable de control. A continuación ambas variantes
 ``` go
 if  a < b {
 	return a
@@ -276,8 +273,8 @@ switch dia := semana[3]; dia {
 		fmt.Println("Ya fin de semana!")
 	case "lunes":
 		fmt.Println("Apenas Iniciando")
-    case "miercoles":
-        fmt.Println("Mitad de semana")
+   	case "miercoles":
+        	fmt.Println("Mitad de semana")
 	default:
 		fmt.Printf("cualquier otro dia")
 }  
@@ -291,8 +288,8 @@ switch {
 		fmt.Println("Excelente nota")
 	case nota == 80:
 		fmt.Println("Buena nota")
-    case nota == 60:
-        fmt.Println("debe mejorar")
+    	case nota == 60:
+        	fmt.Println("debe mejorar")
 }  
 ```
 
@@ -317,7 +314,7 @@ switch i := x.(type) {
 
 ### 2. Bucles
 
-Curiosamente en Golang solo existe una estructura para realizar ciclios, el for, no existe while, pero puede ser emulado por medio del for. usualmente esta es la estructura que lleva
+Curiosamente en Golang solo existe una estructura para realizar ciclos, el for. No existe while pero puede ser emulado por medio del for. usualmente esta es la estructura que lleva
 
 ``` go 
 for [condición |  ( inicialización; condición; incremento ) | rango] {
@@ -365,9 +362,9 @@ for clave, valor := range colores {
 
 En go para controlar el flujo se usan las siguientes estructuras:
 
-- **break**: Termina la ejecuión de un ciclo. 
+- **break**: Termina la ejecución de un ciclo. 
 - **continue**: continúa a siguiente iteración de un ciclo.
-- **goto**: Es similar al jump de ensamblador, transfiere a ejecución de un programa hacia un label. El ejemplo a continuación solo imprime los números mayores a 20 en un arreglo
+- **goto**: Es similar al jump de ensamblador, transfiere la ejecución de un programa hacia un label. El ejemplo a continuación solo imprime los números mayores a 20 en un arreglo
 
 ``` go 
 LABEL: for i := 0; i < len(arr); i++ {
@@ -507,7 +504,7 @@ func funcion()
 }
 ```
 
-### 2. Multiples retornos
+### 2. Múltiples retornos
 
 Una función en go puede retornar múltiples valores de distintos o mismo tipo de la siguiente forma:
 
@@ -555,8 +552,6 @@ func main(){
 ```
 - Pasarla como parámetro a otra función:
 ``` go
-/* la funcion calcular puede  ejecutar cualquier calculo ya que el tipo de calculo se le inyecta. Es un tipo de dependency injection */
-
 func calcular(x int, y int, op func(int, int) int) int {
     return op(x, y)
 }
@@ -642,7 +637,7 @@ En Go (y en general), un puntero es una variable que tiene como valor la direcci
 var nombreDeVariable *tipoDeVariable
 ``` 
 
-No importa el tipo de dato u objeto al que el puntero haga referencia, siempre lo que tendrá guardado es una dirección en memoria en hexadecimal.A continuación un ejemplo de como asignar la referencia a una variable a un puntero:
+No importa el tipo de dato u objeto al que el puntero haga referencia, siempre lo que tendrá guardado es una dirección en memoria en hexadecimal. A continuación un ejemplo de como asignar la referencia a una variable a un puntero:
 
 ``` go
 package main
@@ -669,7 +664,7 @@ En Golang un puntero nulo es uno que tiene como valor 0, o bien se le puede asig
 
 #### Desreferenciar
 
-Ya previamente en un ejemplo se desreferenció un puntero, esto ocurre cuanod se coloca un * al principio del puntero. Esto lo que permite es aaceder al valor al que hace referencia. Además, permite modificar dicho valor. A continuación un ejemplo:
+Ya previamente en un ejemplo se desreferenció un puntero, esto ocurre cuanod se coloca un * al principio de él. Esto lo que permite es acceder al valor al que hace referencia. Además, permite modificar dicho valor. A continuación un ejemplo:
 
 
 ``` go
@@ -705,7 +700,7 @@ Valor de num  30
 
 #### Puntero a puntero
 
-En go se pueden definir punteros a punteros, esto es exactamente lo que el nombre sugiere, es un puntero, que hace tiene como valor la dirección de memoria de otro puntero. Se declara de la siguiente manera:
+En go se pueden definir punteros a punteros, esto es exactamente lo que el nombre sugiere, es un puntero, que tiene como valor la dirección de memoria de otro puntero. Se declara de la siguiente manera:
 
 ``` go
 var puntero **int;
@@ -715,7 +710,7 @@ var puntero **int;
 
 #### Aspectos Generales
 
-En Go los arreglos son una colección de valores de un mismo tipo de dato, que además tiene una longitud definida. La forma en la que se declara es la siguiente:
+En Go los arreglos son una colección de valores de un mismo tipo de dato, que además tienen una longitud definida. La forma en la que se declara es la siguiente:
 
 ``` go
 var nombreDeVariable [Tamaño] tipoDeVariable
@@ -761,7 +756,7 @@ func main() {
 	p = new(Persona)
 
 	// Inicializamos los campos
-	p.Nombre = "Santiago Chaves"
+	p.Nombre = "Maria Estrada"
 	p.Edad = 30
 }
 ``` 
@@ -770,7 +765,7 @@ De todos modos, la práctica más común suele ser dejar que el compilador de Go
 
 ``` go
 p := &Person{
-	Nombre:   "Santiago Chaves",
+	Nombre:   "Maria Estrada",
 	Edad:    30
 }
 ```
@@ -798,15 +793,15 @@ type nombreDelStruct struct {
 Y para poder crear una variable struct se hace de las siguientes formas:
 
 ``` go
-p := Person{"Santiago Chaves", 30}
+p := Person{"Maria Estrada", 30}
 
 p := Person{
-    Nombre: "Santiago Chaves",
+    Nombre: "Maria Estrada",
     Edad: 30
 }
 
 var p Person    
-p.Nombre = "Santiago Chaves"
+p.Nombre = "Maria Estrada"
 p.Edad = 30
 ``` 
 
