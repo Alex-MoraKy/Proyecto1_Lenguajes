@@ -1,4 +1,8 @@
-# Golang 
+# Manual de Golang 
+
+<p align="center">
+  <img src="image-4.png" alt="alt text">
+</p>
 
 Este manual está diseñado para introducirlo a los conceptos fundamentales de Go, un lenguaje que equilibra simplicidad y potencia. A lo largo del contenido, exploraremos desde lo más básico, como el control de flujo y la asignación de variables, hasta aspectos más complejos como el manejo de punteros, memoria dinámica y estructuras definidas por el usuario. Usted se familiarizará con la sintaxis libre de Go, la declaración de variables y funciones, y el uso eficiente de tipos de datos y operadores. Con esta guía, podrá adquirir las herramientas necesarias para escribir programas claros y eficientes en Go.
 
