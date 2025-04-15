@@ -821,20 +821,18 @@ Go similar a como lo hace C, también empieza la ejecución de su programa desde
 
 ## Referencias
 
+[1] D. Atal, "Understanding the Fallthrough Keyword in Golang: A Hidden Gem", *Medium*, [Online]. Disponible en: https://durgeshatal1995.medium.com/understanding-the-fallthrough-keyword-in-golang-a-hidden-gem-285fa26f47af. 
 
-Atal, D. (Diciembre 5, 2023). *Understanding the Fallthrough Keyword in Golang: A Hidden Gem*. Medium. https://durgeshatal1995.medium.com/understanding-the-fallthrough-keyword-in-golang-a-hidden-gem-285fa26f47af
+[2] S. Deshmukh, "Scope of Variables in Go", *Scaler Topics*, [Online]. Disponible en: https://www.scaler.com/topics/golang/scope-of-variables-in-go/.
 
-Deshmukh, S. (Mayo 4, 2023). *Scope of Variables in Go*. Scaler Topics. https://www.scaler.com/topics/golang/scope-of-variables-in-go/
+[3] D. Erhabor, "The new() vs make() Functions in Go – When to Use Each One", *freeCodeCamp*, [Online]. Disponible en: https://www.freecodecamp.org/news/new-vs-make-functions-in-go/.
 
-Erhabor, D. (Enero 4, 2024).*The new() vs make() Functions in Go – When to Use Each One*. freeCodeCamp. https://www.freecodecamp.org/news/new-vs-make-functions-in-go/
+[4] "Go Tutorial", *tutorialspoint*, [Online]. Disponible en: https://www.tutorialspoint.com/go/index.htm.
 
+[5] GO, "Welcome to a tour of Go", *Go wiki*, [Online]. Disponible en: https://go.dev/tour/list.
 
-*Go Tutorial*. (s.f.). tutorialspoint. https://www.tutorialspoint.com/go/index.htm
+[6] GO, "Go Wiki: Switch", *Go wiki*, [Online]. Disponible en: https://go.dev/wiki/Switch.
 
-GO. (s.f.). *Welcome to a tour of Go*. Go wiki. https://go.dev/tour/list 
-
-GO. (s.f.). *Go Wiki: Switch*. Go wiki. https://go.dev/wiki/Switch 
-
-Go 101 Project. (s.f.). *Constants and Variables*. https://go101.org/article/constants-and-variables.html
+[7] Go 101 Project, "Constants and Variables", [Online]. Disponible en: https://go101.org/article/constants-and-variables.html.
 
 
