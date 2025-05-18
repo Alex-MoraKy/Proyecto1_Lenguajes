@@ -1,4 +1,5 @@
 import ModeloUsuarios
+import GestionContras
 import Cifrado
 import System.IO (hFlush, stdout)
 
@@ -51,8 +52,10 @@ iniciarSesion = do
 
     pinCorrecto <- validarPin nombre pin 
     if not pinCorrecto
-        then putStrLn "Bienvenido"
-        else do
+        then do
+            let usuario = Usuario { nombreUsuario = nombre, pinUsuario = pin }
+            menuGestionContraseñas usuario
+        else 
             putStrLn "Credenciales no dan resultados"
 
     menuPrincipal

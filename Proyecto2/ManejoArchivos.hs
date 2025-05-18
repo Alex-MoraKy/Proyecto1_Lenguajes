@@ -1,9 +1,10 @@
 -- Manejo de archivos
 
-module ManejoArchivos (agregarAlFinal, leerLinea, abrirArchivo, cerrarArchivo, listarTxt, crearArchivo) where
+module ManejoArchivos (agregarAlFinal, leerLinea, abrirArchivo, cerrarArchivo, listarTxt, crearArchivo, eliminarLinea) where
 import System.IO
 import System.Directory (getDirectoryContents) --funcion para ver el contenido de un directorio
 import Data.List (isSuffixOf) --Funcion para ver la terminacion de un string
+import Control.DeepSeq (deepseq) --Se usa esta funcion para evitar el lazy loading de readFile
 
 -- Esto escribe por la linea por la que va el archivo
 agregarAlFinal :: FilePath -> String -> IO ()
@@ -38,30 +39,26 @@ listarTxt carpeta = do
   return txtFiles
 
 
-leerLineas :: Handle -> IO ()
-leerLineas handle = do
-    fin <- hIsEOF handle
-    if fin
-        then return ()
-        else do
-            linea <- hGetLine handle
-            putStrLn ("Línea: " ++ linea)
-            leerLineas handle
+-- fincion para eliminar una contraseña
 
-copiarArchivo :: IO ()
-copiarArchivo = do
-    inHandle  <- openFile "entrada.txt" ReadMode
-    outHandle <- openFile "copia.txt" WriteMode
-    copiarLineas inHandle outHandle
-    hClose inHandle
-    hClose outHandle
+eliminarLinea :: FilePath -> Int -> IO ()
+eliminarLinea archivo n = do
+    -- se saca el contenido del archivo
+    contenido <- readFile archivo
+    contenido `deepseq` return () -- Se usa esta funcion para evitar el lazy loading de readFile
 
-copiarLineas :: Handle -> Handle -> IO ()
-copiarLineas hin hout = do
-    eof <- hIsEOF hin
-    if eof
-        then return ()
-        else do
-            linea <- hGetLine hin
-            hPutStrLn hout linea
-            copiarLineas hin hout
+    -- se pasan las lineas del archivo a una lista
+    let lineas = lines contenido
+    
+    -- se elimina el indice asociado a la lista
+    let nuevasLineas = eliminarEn n lineas
+
+    -- se escribe el nuevo contenido al archivo
+    writeFile archivo (unlines nuevasLineas)
+
+-- Elimina el elemento en la posición n de una lista
+eliminarEn :: Int -> [String] -> [String]
+eliminarEn _ [] = []
+eliminarEn n (x:xs) 
+    | n == 0 = xs 
+    | otherwise = x : eliminarEn (n-1) xs
