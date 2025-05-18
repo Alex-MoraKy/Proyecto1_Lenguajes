@@ -9,22 +9,24 @@ main = menuPrincipal
 menuPrincipal :: IO ()
 menuPrincipal = do
     putStrLn "\n===== MENU PRINCIPAL ====="
-    putStrLn "1. Crear usuario y validar PIN"
+    putStrLn "1. Crear usuario"
     putStrLn "2. Probar cifrado de un mensaje"
-    putStrLn "3. Salir"
+    putStrLn "3. Iniciar Sesión"
+    putStrLn "4. Salir"
     putStr "Seleccione una opcion: "
     hFlush stdout
     opcion <- getLine
     case opcion of
-        "1" -> opcionValidarUsuario >> menuPrincipal
+        "1" -> opcionCrearUsuario >> menuPrincipal
         "2" -> opcionProbarCifrado >> menuPrincipal
-        "3" -> putStrLn "Saliendo del programa. ¡Hasta luego!"
+        "3" -> iniciarSesion
+        "4" -> putStrLn "Saliendo del programa. ¡Hasta luego!"
         _   -> putStrLn "Opcion invalida, intente de nuevo." >> menuPrincipal
 
--- Opción 1: Crear usuario y validar PIN
-opcionValidarUsuario :: IO ()
-opcionValidarUsuario = do
-    putStrLn "\n=== CREAR USUARIO Y VALIDAR PIN ==="
+-- Opción 1: Crear usuario
+opcionCrearUsuario :: IO ()
+opcionCrearUsuario = do
+    putStrLn "\n=== CREAR USUARIO ==="
     putStr "Ingrese el nombre del usuario: "
     hFlush stdout
     nombre <- getLine
@@ -32,16 +34,30 @@ opcionValidarUsuario = do
     hFlush stdout
     pinCreado <- getLine
 
-    let usuario = crearUsuario nombre pinCreado
-    putStrLn ("Usuario creado: " ++ show usuario)
+    crearUsuario nombre pinCreado
 
-    putStr "Ingrese el PIN para validar: "
+-- Opción 1: Iniciar Sesion 
+
+iniciarSesion :: IO()
+iniciarSesion = do 
+
+    putStrLn "\n=== INICIAR SESIÓN ==="
+    putStr "Ingrese el nombre del usuario: "
     hFlush stdout
-    pinIngresado <- getLine
+    nombre <- getLine
+    putStr "Ingrese el PIN del usuario: "
+    hFlush stdout
+    pin <- getLine
 
-    if validarPin usuario pinIngresado
-        then putStrLn "PIN correcto."
-        else putStrLn "PIN incorrecto."
+    pinCorrecto <- validarPin nombre pin 
+    if not pinCorrecto
+        then putStrLn "Bienvenido"
+        else do
+            putStrLn "Credenciales no dan resultados"
+
+    menuPrincipal
+
+    
 
 -- Opción 2: Probar el cifrado simple
 opcionProbarCifrado :: IO ()
